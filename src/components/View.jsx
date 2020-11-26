@@ -2,8 +2,9 @@ import React, {useState} from 'react'
 
 function View({status}) {
     return (
-        <div className="row justify-content-center">
-            <img src={status.img} alt="img" />
+        <div className="col text-center">
+            <img src={status.image} alt="img" />
+            <h3 className="mt-3"> {status.message}</h3>
         </div>
     );
 }

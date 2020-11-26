@@ -3,15 +3,10 @@ import Status from './components/Status.jsx'
 import View from './components/View.jsx'
 import Actions from './components/Actions.jsx'
 import React, { useState } from 'react'
+import Programmer from './Programmer'
 
 function App() {
-  const [status, setStatus] = useState({
-    energy: '55',
-    money: '10',
-    fullness: '29',
-    meals: '10',
-    happiness: '20',
-  });
+  const [status, setStatus] = useState(new Programmer());
   return (
     <div className="container">
       <div className="card">
@@ -22,7 +17,7 @@ function App() {
           <View status={status} />
         </div>
         <div className="card-footer">
-          <Actions setStatus={setStatus} />
+          <Actions status={status} setStatus={setStatus} />
         </div>
       </div>
     </div>

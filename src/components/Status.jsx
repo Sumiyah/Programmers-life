@@ -27,6 +27,8 @@ function Status ({status}) {
       <div className="row justify-content-center border py-2">
           <div className="col-2">Money: <i class="far fa-money-bill-alt"></i> x{status.money}</div>
           <div className="col-2">Meals: <i class="fas fa-hamburger"></i> x{status.meals}</div>
+          <div className="col-2">Level: <i class="fab fa-react"></i> {status.level}</div>
+          <div className="col-2">Working Hours: <i class="far fa-clock"></i> {status.workHours}</div>
       </div>
     </>
   );

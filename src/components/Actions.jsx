@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react';
+import Programmer from '../Programmer';
+import ReactTooltip from 'react-tooltip';
 
 function Actions({status, setStatus}) {
+    const [gameStatus, setGameStatus] = useState("");
+    const [mealAmount, setMealAmount] = useState(0);
+
     const getRandomRange = (min, max) => {
         min = Math.ceil(min);
         max = Math.floor(max);
@@ -8,10 +13,13 @@ function Actions({status, setStatus}) {
     }
     const work = () => {
         setStatus({...status, money: status.money += 50, workHours: status.workHours +=8, energy: status.energy -= 5,happiness: status.happiness -= 5,fullness: status.fullness -= 5 ,message: `You worked for 8 hours | Happiness -5, Fullness -5, Energy -5`, image: "img/work.png"})
-        if (25 <= status.workHours && status.workHours <= 60){
-            setStatus({...status,level: "Intermediate", message: status.message += `, your level now is Intermediate congrats!!`, image:"img/levelup.png"})
-        } else if (61 <= status.workHours && status.workHours <= 100){
-            setStatus({...status,level: "Expert", message: status.message += `, your level now is Expert congrats!!`, image:"img/levelup.png"})
+        
+        if (gameStatus === "") {
+            if (25 <= status.workHours && status.workHours <= 60 && status.level !== "Intermediate"){
+                setStatus({...status,level: "Intermediate", message: `Your level now is Intermediate, Congrats!!`, image:"img/levelup.png"})
+            } else if (61 <= status.workHours && status.workHours <= 100 && status.level !== "Expert"){
+                setStatus({...status,level: "Expert", message: `Your level now is Expert, Congrats!!`, image:"img/levelup.png"})
+            }
         }
         return checkStatus()
     }
@@ -39,34 +47,67 @@ function Actions({status, setStatus}) {
         return checkStatus()
     }
     const buyMeals = (amount) => {
-        if (status.money < 10){
-            setStatus({...status, message: "You don't have enough money", image: "img/no.png"})
+        amount = parseInt(amount);
+        if (amount > 0) {
+            if (status.money < (amount*10)) {
+                setStatus({...status, message: "You don't have enough money", image: "img/no.png"})
+            } else {
+                setStatus({...status,meals: status.meals += amount, money: status.money -= amount * 10 ,message: `You bought ${amount} meals | Money -${amount * 10}`, image: "img/buyfood.png"})
+            }
+            setMealAmount(0);
         } else {
-            setStatus({...status,meals: status.meals += amount, money: status.money -= amount * 10 ,message: `You bought ${amount} meals | Money -${amount * 10}`, image: "img/buyfood.png"})
+            setStatus({...status, message: "The number of meals should be grater than 0", image: "img/no.png"})
         }
         
         return checkStatus()
     }
     const checkStatus = () => {
         if( status.energy >= 100 && status.fullness >= 100 && status.happiness >= 100 && status.level === "Expert") {
-            setStatus({...status, message: "You wins!", image: "img/win.png"})
-        } else if(status.fullness < 0) {
-            setStatus({...status, message: "You are died from hunger!", image: "img/lose.png"})
-        } else if(status.happiness < 0) {
-            setStatus({...status, message: "You are died from boredom!", image: "img/lose.png"})
-        } else if(status.energy < 0) {
-            setStatus({...status, message: "You are died from tiredness!", image: "img/lose.png"})
+            setStatus({...status, message: "You wins!", image: "img/win.png"});
+            setGameStatus('Game Over');
+        } else if(status.fullness <= 0) {
+            setStatus({...status, message: "You died from hunger!", image: "img/lose.png"});
+            setGameStatus('Game Over');
+        } else if(status.happiness <= 0) {
+            setStatus({...status, message: "You died from boredom!", image: "img/lose.png"});
+            setGameStatus('Game Over');
+        } else if(status.energy <= 0) {
+            setStatus({...status, message: "You died from tiredness!", image: "img/lose.png"});
+            setGameStatus('Game Over');
         }
         return status;
     }
+
+    const reset = () => {
+        setStatus(new Programmer());
+        setGameStatus('');
+    }
+
     return (
-        <div className="row justify-content-center ">
-            <button type="button" className="btn btn-success px-4" onClick={() => feed()} ><i className="fas fa-hamburger"></i></button>
-            <button type="button" className="btn btn-primary px-4 ml-3" onClick={() => sleep()}><i class="fas fa-bed"></i></button>
-            <button type="button" className="btn btn-danger px-4 ml-3" onClick={() => play()}><i class="fas fa-dice"></i></button>
-            <button type="button" className="btn btn-warning px-4 ml-3" onClick={() => buyMeals(1)}><i class="fas fa-shopping-basket text-white"></i></button>
-            <button type="button" className="btn btn-info px-4 ml-3" onClick={() => work()}><i class="fas fa-laptop-code"></i></button>
-        </div>
+        <>
+        {
+            gameStatus === '' ?
+            <div className="row justify-content-center ml-4">
+                <button data-tip='Eat a Meal' type="button" className="col-1 btn btn-success ml-3" onClick={() => feed()} ><i className="fas fa-hamburger"></i></button>
+                <ReactTooltip />
+                <button data-tip='Go to Sleep' type="button" className="col-1 btn btn-primary  ml-3" onClick={() => sleep()}><i class="fas fa-bed"></i></button>
+                <ReactTooltip />
+                <button  data-tip='Have some Fun' type="button" className="col-1 btn btn-danger ml-3" onClick={() => play()}><i class="fas fa-dice"></i></button>
+                <ReactTooltip />
+                <button data-tip='Go to Work' type="button" className="col-1 btn btn-info ml-3" onClick={() => work()}><i class="fas fa-laptop-code"></i></button>
+                <ReactTooltip />
+                <div className="d-flex ml-3">
+                    <button data-tip='Enter the Number of Meals that you Want to Buy' type="button" className="col-4 btn btn-warning" onClick={() => buyMeals(mealAmount)}><i class="fas fa-shopping-basket text-white"></i></button>
+                    <ReactTooltip />
+                    <input type="number" className="col-3 border text-center px-0" value={mealAmount} onChange={ (e) => setMealAmount(e.target.value) } />
+                </div>
+                
+            </div> :
+            <div className="row justify-content-center ">
+                <button type="button" className="btn btn-dark px-4" onClick={() => reset()} ><i class="fas fa-undo-alt"></i></button>
+            </div>
+        }
+        </>
     );
 }
 

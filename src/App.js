@@ -7,13 +7,14 @@ import Programmer from './Programmer'
 
 function App() {
   const [status, setStatus] = useState(new Programmer());
+  
   return (
-    <div className="container">
+    <div className="container mt-2">
       <div className="card">
         <div className="card-header">
           <Status status={status} />
         </div>
-        <div className="card-body mt-5">
+        <div className="card-body mt-2">
           <View status={status} />
         </div>
         <div className="card-footer">

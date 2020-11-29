@@ -14,7 +14,7 @@ class Programmer {
         this.money = 30;
         this.level = "Beginner";
         this.workHours = 0;
-        this.message = "Welcome to Proggraming world";
+        this.message = "Welcome to Programming world";
         this.image = "img/happy.png";
     }
     // work() {

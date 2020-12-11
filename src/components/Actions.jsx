@@ -87,20 +87,27 @@ function Actions({ status, setStatus }) {
     <>
       {
         gameStatus === '' ?
-          <div className="row justify-content-center ml-4">
-            <button data-tip='Eat a Meal' type="button" className="col-1 btn btn-success ml-3" onClick={() => feed()} ><i className="fas fa-hamburger"></i></button>
+          <div className="row ">
+            
+            <div className="col ">
+              <div className="row justify-content-center">
+
+            <button data-tip='Eat a Meal' type="button" className=" btn btn-success " onClick={() => feed()} ><i className="fas fa-hamburger"></i></button>
             <ReactTooltip />
-            <button data-tip='Go to Sleep' type="button" className="col-1 btn btn-primary  ml-3" onClick={() => sleep()}><i className="fas fa-bed"></i></button>
+            <button data-tip='Go to Sleep' type="button" className=" btn btn-primary  ml-1" onClick={() => sleep()}><i className="fas fa-bed"></i></button>
             <ReactTooltip />
-            <button data-tip='Have some Fun' type="button" className="col-1 btn btn-danger ml-3" onClick={() => play()}><i className="fas fa-dice"></i></button>
+            <button data-tip='Have some Fun' type="button" className=" btn btn-danger ml-1" onClick={() => play()}><i className="fas fa-dice"></i></button>
             <ReactTooltip />
-            <button data-tip='Go to Work' type="button" className="col-1 btn btn-info ml-3" onClick={() => work()}><i className="fas fa-laptop-code"></i></button>
+            <button data-tip='Go to Work' type="button" className="btn btn-info ml-1" onClick={() => work()}><i className="fas fa-laptop-code"></i></button>
             <ReactTooltip />
-            <div className="d-flex ml-3">
-              <button data-tip='Enter the Number of Meals that you Want to Buy' type="button" className="col-4 btn btn-warning" onClick={() => buyMeals(mealAmount)}><i className="fas fa-shopping-basket text-white"></i></button>
+            
+              <button data-tip='Enter the Number of Meals that you Want to Buy' type="button" className=" ml-1 btn btn-warning" onClick={() => buyMeals(mealAmount)}><i className="fas fa-shopping-basket text-white"></i></button>
               <ReactTooltip />
-              <input type="number" className="col-3 border text-center px-0" value={mealAmount} onChange={(e) => setMealAmount(e.target.value)} />
+              <input type="number" className="col-2 border text-center px-0" value={mealAmount} onChange={(e) => setMealAmount(e.target.value)} />
+            
+              </div>
             </div>
+            
           </div> :
           <div className="row justify-content-center ">
             <a data-tip='Reset' type="button" className="btn btn-dark px-4" onClick={() => reset()} ><i className="fas fa-undo-alt"></i></a>

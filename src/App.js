@@ -9,7 +9,7 @@ function App() {
   const [status, setStatus] = useState(new Programmer());
   
   return (
-    <div className="container mt-2">
+    <div className="container mt-3">
       <div className="card">
         <div className="card-header">
           <Status status={status} />

@@ -26,7 +26,7 @@ function Status ({status, medalColor}) {
       </div>
 
       <div className="d-flex justify-content-around pt-2">
-          <div data-tip='Amount of Meals'>
+          <div data-tip='Amount of Money'>
             <i className="far fa-money-bill-alt mx-1" style={{color:"green"}}></i> 
             x{status.money}
           </div>

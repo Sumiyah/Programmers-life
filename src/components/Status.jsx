@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react';
+import ReactTooltip from 'react-tooltip';
 
-function Status ({status}) {
+function Status ({status, medalColor}) {
   return (
     <>
       <div className="row justify-content-center border-bottom pt-0 pb-3">
@@ -25,10 +26,29 @@ function Status ({status}) {
       </div>
 
       <div className="d-flex justify-content-around pt-2">
-          <div>Money:  <i className="far fa-money-bill-alt"></i> x{status.money}</div>
-          <div>Meals: <i className="fas fa-hamburger"></i> x{status.meals}</div>
-          <div>Level: <i className="fab fa-react"></i> {status.level}</div>
-          <div>Working Hours: <i className="far fa-clock"></i> {status.workHours}</div>
+          <div data-tip='Amount of Meals'>
+            <i className="far fa-money-bill-alt mx-1" style={{color:"green"}}></i> 
+            x{status.money}
+          </div>
+          <ReactTooltip />
+
+          <div data-tip='Number of Meals'>
+            <i className="fas fa-hamburger mx-1" style={{color:"#EDAC2F"}}></i> 
+            x{status.meals}
+          </div>
+          <ReactTooltip />
+          
+          <div data-tip='Proogramming Level'>
+            <i className="fab fa-react mx-1" style={{color:"#29B6F6"}}></i>LvL:
+            <span style={{color: medalColor}}><i className="fas fa-medal mx-1"></i></span>
+          </div>
+          <ReactTooltip />
+
+          <div data-tip='Working Hours'>
+            <i className="far fa-clock mx-1"></i> 
+            {status.workHours} hr
+          </div>
+          <ReactTooltip />
       </div>
     </>
   );

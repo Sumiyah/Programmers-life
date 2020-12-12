@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Programmer from '../Programmer';
 import ReactTooltip from 'react-tooltip';
 
-function Actions({ status, setStatus }) {
+function Actions({ status, setStatus, setMedalColor }) {
   const [gameStatus, setGameStatus] = useState("");
   const [mealAmount, setMealAmount] = useState(1);
-
+  
   const getRandomRange = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -17,8 +17,10 @@ function Actions({ status, setStatus }) {
     if (gameStatus === "") {
       if (25 <= status.workHours && status.workHours <= 60 && status.level !== "Intermediate") {
         setStatus({ ...status, level: "Intermediate", message: `Your level now is Intermediate, Congrats!!`, image: "img/levelup.png" })
+        setMedalColor("#B4B4B4");
       } else if (61 <= status.workHours && status.workHours <= 100 && status.level !== "Expert") {
         setStatus({ ...status, level: "Expert", message: `Your level now is Expert, Congrats!!`, image: "img/levelup.png" })
+        setMedalColor('#C9B037');
       }
     }
     return checkStatus()
